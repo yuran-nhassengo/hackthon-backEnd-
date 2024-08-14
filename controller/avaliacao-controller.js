@@ -27,7 +27,8 @@ const createAvaliacao = asyncHandler(async (req, res) => {
       .json({ message: "Erro ao criar avaliação", error: err.message });
   }
 });
-const getAvaliacoes = async (req, res) => {
+
+const getAvaliacoes = asyncHandler(async (req, res) => {
   try {
     const avaliacoes = await Avaliacao.find();
     res.status(200).json(avaliacoes);
@@ -36,8 +37,9 @@ const getAvaliacoes = async (req, res) => {
       .status(500)
       .json({ message: "Erro ao buscar avaliações", error: err.message });
   }
-};
-const getAvaliacaoById = async (req, res) => {
+});
+
+const getAvaliacaoById = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const avaliacao = await Avaliacao.findById(id);
@@ -50,7 +52,23 @@ const getAvaliacaoById = async (req, res) => {
       .status(500)
       .json({ message: "Erro ao buscar avaliação", error: err.message });
   }
-};
+});
+
+const updateAvaliacao = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const atualizacao = req.body;
+    const avaliacao = await Avaliacao.findByIdAndUpdate(id, atualizacao, { new: true });
+    if (!avaliacao) {
+      return res.status(404).json({ message: 'Avaliação não encontrada' });
+    }
+    res.status(200).json(avaliacao);
+  } catch (err) {
+    res.status(400).json({ message: 'Erro ao atualizar avaliação', error: err.message });
+  }
+});
+
+
 const deleteAvaliacao = async (req, res) => {
   try {
     const { id } = req.params;
@@ -66,4 +84,4 @@ const deleteAvaliacao = async (req, res) => {
   }
 };
 
-module.exports = { createAvaliacao };
+module.exports = { createAvaliacao,getAvaliacaoById,deleteAvaliacao,getAvaliacoes,updateAvaliacao};
