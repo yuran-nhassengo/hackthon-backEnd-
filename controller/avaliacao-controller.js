@@ -14,6 +14,8 @@ const createAvaliacao = asyncHandler(async (req, res) => {
         .json({ message: "Todos os campos sao Obrigatorios." });
     }
 
+    console.log("cheguei...2",req.body);
+
     const novaAvaliacao = await Avaliacao.create({
       numero,
       materia,
