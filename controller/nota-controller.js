@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 
 const createNota = asyncHandler(async (req, res) => {
     try {
-      const { nota} = req.body;
+      const {nota} = req.body;
   
       const turmaId =  req.aluno.id; 
   
@@ -16,7 +16,7 @@ const createNota = asyncHandler(async (req, res) => {
         }
   
       const novaNota = await Notas.create({
-           nota,
+          nota,
           idAluno:turmaId,
           idAvaliacao:turmaId });
       
