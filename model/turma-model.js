@@ -11,7 +11,7 @@ const turmaSchema = new mongoose.Schema({
     required: true, 
   },
   Classe: {
-    type: Number,
+    type: String,
     required: true, 
   },
   idProfessor: {
