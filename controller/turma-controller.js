@@ -9,7 +9,7 @@ const createTurma = async (req, res) => {
     const novaTurma = await Turma.create({
        numero,
         sala,
-         idClasse,
+         Classe:idClasse,
           idProfessor });
     res.status(201).json(novaTurma);
   } catch (err) {
