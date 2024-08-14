@@ -47,8 +47,21 @@ const getNotaById = async (req, res) => {
     res.status(500).json({ message: 'Erro ao buscar nota', error: err.message });
   }
 };
+const updateNota = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const atualizacao = req.body;
+    const nota = await Notas.findByIdAndUpdate(id, atualizacao, { new: true }).populate('idAluno').populate('idAvaliacao');
+    if (!nota) {
+      return res.status(404).json({ message: 'Nota não encontrada' });
+    }
+    res.status(200).json(nota);
+  } catch (err) {
+    res.status(400).json({ message: 'Erro ao atualizar nota', error: err.message });
+  }
+};
 
 
 
 
-module.exports ={createNota,getNotas,getNotaById}
+module.exports ={createNota,getNotas,getNotaById, updateNota}
