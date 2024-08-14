@@ -27,5 +27,7 @@ app.use('/api',require('./routes/avaliacao-route'));
 
 app.use('/api',require('./routes/aluno-route'));
 
+app.use('/api',require('./routes/nota-route'));
+
 
 app.listen(port,() => console.log(`Listening on http://localhost:${port}`));
