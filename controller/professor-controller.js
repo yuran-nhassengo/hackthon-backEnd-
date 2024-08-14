@@ -26,6 +26,7 @@ const createProfessor = asyncHandler(async (req, res) => {
 
 const getProfessores = asyncHandler(async (req, res) => {
   try {
+    console.log("Professor......1");
     const professores = await Professor.find();
     res.status(200).json(professores);
   } catch (err) {

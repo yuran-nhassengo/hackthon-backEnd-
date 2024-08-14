@@ -4,9 +4,14 @@ const Turma = require('../model/turma-model');
 const createTurma = async (req, res) => {
   try {
     const { numero, sala, idClasse, idProfessor } = req.body;
-    const novaTurma = new Turma({ numero, sala, idClasse, idProfessor });
-    const resultado = await novaTurma.save();
-    res.status(201).json(resultado);
+
+    console.log("Turma o professor........1",idClasse)
+    const novaTurma = await Turma.create({
+       numero,
+        sala,
+         idClasse,
+          idProfessor });
+    res.status(201).json(novaTurma);
   } catch (err) {
     res.status(400).json({ message: 'Erro ao criar turma', error: err.message });
   }

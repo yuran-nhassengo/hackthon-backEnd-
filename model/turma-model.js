@@ -10,7 +10,7 @@ const turmaSchema = new mongoose.Schema({
     type: Number,
     required: true, 
   },
-  idClasse: {
+  Classe: {
     type: Number,
     required: true, 
   },
