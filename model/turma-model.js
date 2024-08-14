@@ -10,10 +10,12 @@ const turmaSchema = new mongoose.Schema({
     type: Number,
     required: true, 
   },
-  Classe: {
-    type: String,
+  idClasse: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Classe',
     required: true, 
   },
+  
   idProfessor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Professor', 

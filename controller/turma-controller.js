@@ -20,7 +20,7 @@ const createTurma = async (req, res) => {
 
 const getTurmas = async (req, res) => {
   try {
-    const turmas = await Turma.find().populate('idProfessor'); 
+    const turmas = await Turma.find().populate('idProfessor').populate('idClasse').exec() ; 
     res.status(200).json(turmas);
   } catch (err) {
     res.status(500).json({ message: 'Erro ao buscar turmas', error: err.message });
