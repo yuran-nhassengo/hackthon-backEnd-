@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const turmaController = require("../controllers/turmaController");
+const {createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma} = require("../controller/turma-controller");
 
-router.post("/turmas", turmaController.createTurma);
+router.post("/turmas", createTurma);
 
-router.get("/turmas", turmaController.getTurmas);
+router.get("/turmas", getTurmas);
 
-router.get("/turmas/:id", turmaController.getTurmaById);
+router.get("/turmas/:id", getTurmaById);
 
-router.put("/turmas/:id", turmaController.updateTurma);
+router.put("/turmas/:id", updateTurma);
 
-router.delete("/turmas/:id", turmaController.deleteTurma);
+router.delete("/turmas/:id", deleteTurma);
 
 module.exports = router;

@@ -31,6 +31,8 @@ app.use('/api',require('./routes/nota-route'));
 
 app.use('/api',require('./routes/professor-route'));
 
+app.use('/api',require('./routes/turma-route'));
+
 
 
 
