@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Professor = require('./professor-model');
+const Professor = require('../model/professor-model');
 const bcrypt = require('bcryptjs');
 
 

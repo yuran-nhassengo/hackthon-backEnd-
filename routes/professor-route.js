@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { createProfessor, getProfessores, getProfessorById, updateProfessor, deleteProfessor } = require('./professor-controller');
+const { createProfessor, getProfessores,
+     getProfessorById, updateProfessor,
+      deleteProfessor } = require('../controller/professor-controller');
 
 
 router.post('/professores', createProfessor);
