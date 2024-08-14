@@ -1,4 +1,4 @@
-const Notas = require('../models/notas');
+const Notas = require('../model/nota-model');
 const asyncHandler = require("express-async-handler");
 
 

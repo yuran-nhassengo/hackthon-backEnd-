@@ -3,6 +3,8 @@ const asyncHandler = require("express-async-handler");
 const Avaliacao = require("../model/avaliacao-model");
 
 const createAvaliacao = asyncHandler(async (req, res) => {
+
+  console.log("cheguei...1");
   try {
     const { numero, materia, data } = req.body;
 
