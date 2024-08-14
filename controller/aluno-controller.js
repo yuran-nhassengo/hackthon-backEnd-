@@ -75,4 +75,5 @@ const deleteAluno = async (req, res) => {
 };
 
 
+
 module.exports ={createAluno,getAlunos,getAlunoById, updateAluno, deleteAluno};
