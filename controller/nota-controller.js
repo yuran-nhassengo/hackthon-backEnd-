@@ -20,7 +20,7 @@ const createNota = asyncHandler(async (req, res) => {
           idAluno:turmaId,
           idAvaliacao:turmaId });
       
-      res.status(201).json(resultado);
+      res.status(201).json(novaNota);
     } catch (err) {
       res.status(400).json({ message: 'Erro ao criar nota', error: err.message });
     }
