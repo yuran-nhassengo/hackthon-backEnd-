@@ -33,6 +33,10 @@ app.use('/api',require('./routes/professor-route'));
 
 app.use('/api',require('./routes/turma-route'));
 
+app.use('/api',require('./routes/classe-route'));
+
+app.use('/api',require('./routes/disciplina-route'));
+
 
 
 
