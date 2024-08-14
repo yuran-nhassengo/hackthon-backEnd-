@@ -22,13 +22,14 @@ const createAvaliacao = asyncHandler(async (req, res) => {
       data,
     });
 
+    console.log("cheguei...3",req.body);
+
     res
       .status(201)
       .json({ message: "Avaliacao criada com sucesso!", novaAvaliacao });
   } catch (err) {
-    res
-      .status(400)
-      .json({ message: "Erro ao criar avaliação", error: err.message });
+    console.log("cheguei...4",err);
+    res.status(400).json({ message: "Erro ao criar avaliação", error: err.message });
   }
 });
 
