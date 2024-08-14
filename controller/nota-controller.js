@@ -60,8 +60,17 @@ const updateNota = async (req, res) => {
     res.status(400).json({ message: 'Erro ao atualizar nota', error: err.message });
   }
 };
+const deleteNota = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const resultado = await Notas.findByIdAndDelete(id);
+    if (!resultado) {
+      return res.status(404).json({ message: 'Nota não encontrada' });
+    }
+    res.status(200).json({ message: 'Nota excluída com sucesso' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erro ao excluir nota', error: err.message });
+  }
+};
 
-
-
-
-module.exports ={createNota,getNotas,getNotaById, updateNota}
+module.exports ={createNota,getNotas,getNotaById, updateNota, deleteNota}
