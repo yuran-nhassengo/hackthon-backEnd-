@@ -4,6 +4,9 @@ const Aluno = require('../model/aluno-model');
 
 
 const createAluno = asyncHandler(async (req, res) => {
+
+    const turmaId =  req.aluno.id; 
+
     try {
       const { nome, dataNascimento, sexo, idTurma } = req.body;
 
@@ -17,7 +20,7 @@ const createAluno = asyncHandler(async (req, res) => {
         nome, 
         dataNascimento,
          sexo,
-        idTurma });
+        idTurma:turmaId });
   
       res.status(201).json( {message: "Aluno criado com sucesso!",resultado});
     } catch (err) {
@@ -26,54 +29,58 @@ const createAluno = asyncHandler(async (req, res) => {
   });
 
 
-const getAlunos = async (req, res) => {
-  try {
-    const alunos = await Aluno.find().populate('idTurma'); 
-    res.status(200).json(alunos);
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao buscar alunos', error: err.message });
-  }
-};
+const getAlunos = asyncHandler(async (req, res) => {
+    try {
+      const alunos = await Aluno.find().populate('idTurma'); 
+      res.status(200).json(alunos);
+    } catch (err) {
+      res.status(500).json({ message: 'Erro ao buscar alunos', error: err.message });
+    }
+  });
 
 
-const getAlunoById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const aluno = await Aluno.findById(id).populate('idTurma');
-    if (!aluno) {
-      return res.status(404).json({ message: 'Aluno não encontrado' });
+const getAlunoById = asyncHandler(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const aluno = await Aluno.findById(id).populate('idTurma');
+      if (!aluno) {
+        return res.status(404).json({ message: 'Aluno não encontrado' });
+      }
+      res.status(200).json(aluno);
+    } catch (err) {
+      res.status(500).json({ message: 'Erro ao buscar aluno', error: err.message });
     }
-    res.status(200).json(aluno);
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao buscar aluno', error: err.message });
-  }
-};
-const updateAluno = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const atualizacao = req.body;
-    const aluno = await Aluno.findByIdAndUpdate(id, atualizacao, { new: true }).populate('idTurma');
-    if (!aluno) {
-      return res.status(404).json({ message: 'Aluno não encontrado' });
-    }
-    res.status(200).json(aluno);
-  } catch (err) {
-    res.status(400).json({ message: 'Erro ao atualizar aluno', error: err.message });
-  }
-};
-const deleteAluno = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const resultado = await Aluno.findByIdAndDelete(id);
-    if (!resultado) {
-      return res.status(404).json({ message: 'Aluno não encontrado' });
-    }
-    res.status(200).json({ message: 'Aluno excluído com sucesso' });
-  } catch (err) {
-    res.status(500).json({ message: 'Erro ao excluir aluno', error: err.message });
-  }
-};
+  });
 
+
+const updateAluno = asyncHandler(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const atualizacao = req.body;
+      const aluno = await Aluno.findByIdAndUpdate(id, atualizacao, { new: true }).populate('idTurma');
+      if (!aluno) {
+        return res.status(404).json({ message: 'Aluno não encontrado' });
+      }
+      res.status(200).json(aluno);
+    } catch (err) {
+      res.status(400).json({ message: 'Erro ao atualizar aluno', error: err.message });
+    }
+  });
+
+
+const deleteAluno = asyncHandler(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const resultado = await Aluno.findByIdAndDelete(id);
+      if (!resultado) {
+        return res.status(404).json({ message: 'Aluno não encontrado' });
+      }
+      res.status(200).json({ message: 'Aluno excluído com sucesso' });
+    } catch (err) {
+      res.status(500).json({ message: 'Erro ao excluir aluno', error: err.message });
+    }
+  }
+  );
 
 
 module.exports ={createAluno,getAlunos,getAlunoById, updateAluno, deleteAluno};

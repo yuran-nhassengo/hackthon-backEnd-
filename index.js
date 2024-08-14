@@ -18,7 +18,14 @@ app.use(cors());
 
 app.use(express.urlencoded({extended: false}));
 
+app.use((req, res, next) => {
+    req.aluno = { id: 1 }; 
+    next();
+  });
+
 app.use('/api',require('./routes/avaliacao-route'));
+
+app.use('/api',require('./routes/aluno-route'));
 
 
 app.listen(port,() => console.log(`Listening on http://localhost:${port}`));
