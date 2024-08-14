@@ -8,9 +8,9 @@ const createAluno = asyncHandler(async (req, res) => {
     const turmaId =  req.aluno.id; 
 
     try {
-      const { nome, dataNascimento, sexo, idTurma } = req.body;
+      const { nome, dataNascimento, sexo  } = req.body;
 
-      if (!nome || !dataNascimento || !sexo || !idTurma) {
+      if (!nome || !dataNascimento || !sexo  ) {
         return res
           .status(400)
           .json({ message: "Todos os campos sao Obrigatorios." });
