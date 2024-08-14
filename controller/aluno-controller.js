@@ -22,7 +22,7 @@ const createAluno = asyncHandler(async (req, res) => {
          sexo,
         idTurma:turmaId });
   
-      res.status(201).json( {message: "Aluno criado com sucesso!",resultado});
+      res.status(201).json( {message: "Aluno criado com sucesso!",novoAluno});
     } catch (err) {
       res.status(400).json({ message: 'Erro ao criar aluno', error: err.message });
     }

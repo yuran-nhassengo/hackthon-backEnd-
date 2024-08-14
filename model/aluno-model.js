@@ -16,8 +16,9 @@ const alunoSchema = new mongoose.Schema({
     required: true, 
   },
   idTurma: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Turma', 
+   // type: mongoose.Schema.Types.ObjectId,
+   // ref: 'Turma', 
+   type: Number, 
     required: true, 
   },
 });
