@@ -7,6 +7,8 @@ const createAluno = asyncHandler(async (req, res) => {
 
     const turmaId =  req.aluno.id; 
 
+    console.log("Aluno..........1")
+
     try {
       const { nome, dataNascimento, sexo  } = req.body;
 
@@ -15,6 +17,8 @@ const createAluno = asyncHandler(async (req, res) => {
           .status(400)
           .json({ message: "Todos os campos sao Obrigatorios." });
       }
+
+      console.log("Aluno..........2")
   
       const novoAluno = await Aluno.create({ 
         nome, 
@@ -24,6 +28,7 @@ const createAluno = asyncHandler(async (req, res) => {
   
       res.status(201).json( {message: "Aluno criado com sucesso!",novoAluno});
     } catch (err) {
+      console.log("Aluno..........eror",err);
       res.status(400).json({ message: 'Erro ao criar aluno', error: err.message });
     }
   });
