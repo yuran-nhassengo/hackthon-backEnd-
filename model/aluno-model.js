@@ -12,7 +12,7 @@ const alunoSchema = new mongoose.Schema({
   },
   sexo: {
     type: String,
-    enum: ['Masculino', 'Feminino', 'Outros'], 
+    enum: ['Masculino', 'Feminino', 'Outro', 'masculino', 'feminino', 'outro'],
     required: true, 
   },
   idTurma: {

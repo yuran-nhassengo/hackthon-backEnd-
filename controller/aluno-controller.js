@@ -18,7 +18,11 @@ const createAluno = asyncHandler(async (req, res) => {
           .json({ message: "Todos os campos sao Obrigatorios." });
       }
 
-      console.log("Aluno..........2")
+      console.log("Aluno..........2");
+
+      console.log("Aluno..........22",req.body);
+
+
   
       const novoAluno = await Aluno.create({ 
         nome, 
