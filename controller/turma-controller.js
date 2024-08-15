@@ -38,6 +38,7 @@ const getTurmas = asyncHandler(async (req, res) => {
 const getTurmaById = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
+    
     const turma = await Turma.findById(id).populate('idProfessor');
     if (!turma) {
       return res.status(404).json({ message: 'Turma não encontrada' });
