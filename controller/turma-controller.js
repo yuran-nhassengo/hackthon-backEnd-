@@ -1,30 +1,31 @@
+const asyncHandler = require('express-async-handler');
 const Turma = require('../model/turma-model');
-
-const asyncHandler = require("express-async-handler");
-
 const Aluno = require('../model/aluno-model');
+const mongoose = require('mongoose');
 
-const createTurma = async (req, res) => {
+const createTurma = asyncHandler(async (req, res) => {
   try {
     const { numero, sala, idClasse, idProfessor } = req.body;
 
-    console.log("Turma o professor........1",idClasse)
+    console.log("Criando turma com idClasse:", idClasse);
+
     const novaTurma = await Turma.create({
-       numero,
-        sala,
-         idClasse,
-          idProfessor });
+      numero,
+      sala,
+      idClasse,
+      idProfessor
+    });
+
     res.status(201).json(novaTurma);
   } catch (err) {
     res.status(400).json({ message: 'Erro ao criar turma', error: err.message });
   }
-};
+});
 
-
-const getTurmas = async (req, res) => {
+const getTurmas = asyncHandler(async (req, res) => {
   try {
     const turmas = await Turma.find()
-      .populate('idClasse','nome')
+      .populate('idClasse', 'nome')
       .populate('idProfessor', 'nome')
       .exec();
 
@@ -32,10 +33,9 @@ const getTurmas = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Erro ao buscar turmas', error: err.message });
   }
-};
+});
 
-
-const getTurmaById = async (req, res) => {
+const getTurmaById = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const turma = await Turma.findById(id).populate('idProfessor');
@@ -46,10 +46,9 @@ const getTurmaById = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Erro ao buscar turma', error: err.message });
   }
-};
+});
 
-
-const updateTurma = async (req, res) => {
+const updateTurma = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const atualizacao = req.body;
@@ -61,10 +60,9 @@ const updateTurma = async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: 'Erro ao atualizar turma', error: err.message });
   }
-};
+});
 
-
-const deleteTurma = async (req, res) => {
+const deleteTurma = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const resultado = await Turma.findByIdAndDelete(id);
@@ -75,12 +73,12 @@ const deleteTurma = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Erro ao excluir turma', error: err.message });
   }
-};
+});
 
 const getAlunosByTurma = asyncHandler(async (req, res) => {
   const turmaId = req.query.idTurma;
 
-  console.log("ttttttttt",turmaId);
+  console.log("Buscando alunos para turma:", turmaId);
 
   try {
     if (turmaId && !mongoose.Types.ObjectId.isValid(turmaId)) {
@@ -96,19 +94,23 @@ const getAlunosByTurma = asyncHandler(async (req, res) => {
   }
 });
 
-const getQuantidadeTurmas = async (req, res) => {
-  const professorId = req.professorId; 
+const getQuantidadeTurmas = asyncHandler(async (req, res) => {
+  const professorId = req.user.id; // O ID do professor vem do token JWT
   
   try {
-    
     const quantidadeTurmas = await Turma.countDocuments({ idProfessor: professorId });
-    
-   
     res.json({ quantidadeTurmas });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+module.exports = {
+  createTurma,
+  getTurmas,
+  getTurmaById,
+  updateTurma,
+  deleteTurma,
+  getAlunosByTurma,
+  getQuantidadeTurmas
 };
-
-
-module.exports ={createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma,getAlunosByTurma,getQuantidadeTurmas}

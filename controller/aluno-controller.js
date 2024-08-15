@@ -118,6 +118,7 @@ const deleteAluno = asyncHandler(async (req, res) => {
   });
 
   const getAlunosPorTurmaPr = async (req, res) => {
+    
     const professorId = req.professorId;
   
     try {

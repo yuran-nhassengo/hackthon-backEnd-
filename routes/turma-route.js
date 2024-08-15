@@ -1,9 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const {createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma} = require("../controller/turma-controller");
-
-const {getAlunosByTurma,getQuantidadeTurmas} = require('../controller/turma-controller');
-
+const {
+  createTurma,
+  getTurmas,
+  getTurmaById,
+  updateTurma,
+  deleteTurma,
+  getAlunosByTurma,
+  getQuantidadeTurmas
+} = require("../controller/turma-controller");
+const { authenticateToken } = require('../controller/professor-controller');
 
 router.post("/turmas", createTurma);
 
@@ -17,7 +23,6 @@ router.delete("/turmas/:id", deleteTurma);
 
 router.get('/alunos/turma', getAlunosByTurma);
 
-
-router.get('/quantidade-turmas', getQuantidadeTurmas);
+router.get('/quantidade-turmas', authenticateToken, getQuantidadeTurmas);
 
 module.exports = router;
