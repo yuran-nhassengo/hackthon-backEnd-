@@ -9,15 +9,13 @@ const notasSchema = new mongoose.Schema({
     max: 20 
   },
   idAluno: {
-   // type: mongoose.Schema.Types.ObjectId,
-    //ref: 'Aluno', 
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Aluno', 
     required: true,
   },
   idAvaliacao: {
-    //type: mongoose.Schema.Types.ObjectId,
-    //ref: 'Avaliacao', 
-    type: Number,
+     type: mongoose.Schema.Types.ObjectId,
+     ref: 'Avaliacao', 
     required: true, 
   },
 });

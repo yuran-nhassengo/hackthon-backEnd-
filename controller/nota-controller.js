@@ -4,9 +4,7 @@ const asyncHandler = require("express-async-handler");
 
 const createNota = asyncHandler(async (req, res) => {
     try {
-      const {nota} = req.body;
-  
-      const turmaId =  req.aluno.id; 
+      const {nota,idAvaliacao,idAluno} = req.body;
   
   
       if (!nota) {
@@ -17,8 +15,8 @@ const createNota = asyncHandler(async (req, res) => {
   
       const novaNota = await Notas.create({
           nota,
-          idAluno:turmaId,
-          idAvaliacao:turmaId });
+          idAluno,
+          idAvaliacao });
       
       res.status(201).json(novaNota);
     } catch (err) {
@@ -78,4 +76,29 @@ const deleteNota = asyncHandler(async (req, res) => {
     }
   });
 
-module.exports ={createNota,getNotas,getNotaById, updateNota, deleteNota}
+  const adicionarNotas = asyncHandler(async (req, res) => {
+    const notas = req.body;
+  console.log("notas.......",req.body);
+    
+    if (!Array.isArray(notas) || !notas.every(nota => nota.idAluno && nota.idAvaliacao && typeof nota.nota === 'number')) {
+      return res.status(400).json({ message: 'Dados de notas inválidos.' });
+    }
+  
+    try {
+
+      await Promise.all(notas.map(async ({ idAluno, idAvaliacao, nota }) => {
+        return Notas.findOneAndUpdate(
+          { idAluno, idAvaliacao },
+          { nota },
+          { upsert: true, new: true }
+        );
+      }));
+  
+      res.status(200).json({ message: 'Notas atualizadas com sucesso.' });
+    } catch (err) {
+      console.log("error.......",err);
+      res.status(500).json({ message: 'Erro ao atualizar notas', error: err.message });
+    }
+  });
+
+module.exports ={createNota,getNotas,getNotaById, updateNota, deleteNota,adicionarNotas}
