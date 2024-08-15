@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const Aluno = require('../model/aluno-model');
+const Turma = require('../model/turma-model');
 const { default: mongoose } = require("mongoose");
 
 
@@ -116,5 +117,25 @@ const deleteAluno = asyncHandler(async (req, res) => {
     }
   });
 
+  const getAlunosPorTurmaPr = async (req, res) => {
+    const professorId = req.professorId;
+  
+    try {
+      
+      const turmas = await Turma.find({ idProfessor: professorId });
+      
+      let totalAlunos = 0;
+  
+      for (const turma of turmas) {
+        const alunosCount = await Aluno.countDocuments({ idTurma: turma._id });
+        totalAlunos += alunosCount;
+      }
+  
+     
+      res.json({ totalAlunos });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 
-module.exports ={createAluno,getAlunos,getAlunoById, updateAluno, deleteAluno,getAlunosPorTurma };
+module.exports ={createAluno,getAlunos,getAlunoById, updateAluno, deleteAluno,getAlunosPorTurma,getAlunosPorTurmaPr};

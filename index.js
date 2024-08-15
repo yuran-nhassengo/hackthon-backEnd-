@@ -23,6 +23,14 @@ app.use((req, res, next) => {
     next();
   });
 
+  const simularLogin = (req, res, next) => {
+    req.professorId = '66bd020d01ce226002aac255'; 
+
+    next();
+  };
+
+  app.use(simularLogin);
+
 app.use('/api',require('./routes/avaliacao-route'));
 
 app.use('/api',require('./routes/aluno-route'));
