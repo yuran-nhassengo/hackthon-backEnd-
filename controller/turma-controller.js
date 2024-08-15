@@ -95,7 +95,7 @@ const getAlunosByTurma = asyncHandler(async (req, res) => {
 });
 
 const getQuantidadeTurmas = asyncHandler(async (req, res) => {
-  const professorId = req.user.id; // O ID do professor vem do token JWT
+  const professorId = req.user.id; 
   
   try {
     const quantidadeTurmas = await Turma.countDocuments({ idProfessor: professorId });

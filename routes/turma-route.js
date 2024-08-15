@@ -9,7 +9,8 @@ const {
   getAlunosByTurma,
   getQuantidadeTurmas
 } = require("../controller/turma-controller");
-const { authenticateToken } = require('../controller/professor-controller');
+
+const { authenticateToken,getTurmasPorProfessor } = require('../controller/professor-controller');
 
 router.post("/turmas", createTurma);
 
@@ -24,5 +25,7 @@ router.delete("/turmas/:id", deleteTurma);
 router.get('/alunos/turma', getAlunosByTurma);
 
 router.get('/quantidade-turmas', authenticateToken, getQuantidadeTurmas);
+
+router.get('/turma-por-professor', authenticateToken, getTurmasPorProfessor);
 
 module.exports = router;

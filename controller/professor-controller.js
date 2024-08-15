@@ -185,6 +185,17 @@ const getQuantidadeDisciplinasPorProfessor = async (req, res) => {
   }
 };
 
+const getTurmasPorProfessor = async (req, res) => {
+  const professorId = req.user.id;
+
+  try {
+    const turmas = await Turma.find({ idProfessor: professorId });
+    res.json(turmas);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createProfessor,
   getProfessores,
@@ -194,5 +205,6 @@ module.exports = {
   getQuantidadeClassesPorProfessor,
   getQuantidadeDisciplinasPorProfessor,
   login,
-  authenticateToken
+  authenticateToken,
+  getTurmasPorProfessor
 };
