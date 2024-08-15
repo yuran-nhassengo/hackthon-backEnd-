@@ -1,5 +1,8 @@
 const Turma = require('../model/turma-model');
 
+const asyncHandler = require("express-async-handler");
+
+const Aluno = require('../model/aluno-model');
 
 const createTurma = async (req, res) => {
   try {
@@ -9,7 +12,7 @@ const createTurma = async (req, res) => {
     const novaTurma = await Turma.create({
        numero,
         sala,
-         Classe:idClasse,
+         idClasse,
           idProfessor });
     res.status(201).json(novaTurma);
   } catch (err) {
@@ -20,7 +23,11 @@ const createTurma = async (req, res) => {
 
 const getTurmas = async (req, res) => {
   try {
-    const turmas = await Turma.find().populate('idProfessor').populate('idClasse').exec() ; 
+    const turmas = await Turma.find()
+      .populate('idClasse','nome')
+      .populate('idProfessor', 'nome')
+      .exec();
+
     res.status(200).json(turmas);
   } catch (err) {
     res.status(500).json({ message: 'Erro ao buscar turmas', error: err.message });
@@ -70,5 +77,24 @@ const deleteTurma = async (req, res) => {
   }
 };
 
+const getAlunosByTurma = asyncHandler(async (req, res) => {
+  const turmaId = req.query.idTurma;
 
-module.exports ={createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma}
+  console.log("ttttttttt",turmaId);
+
+  try {
+    if (turmaId && !mongoose.Types.ObjectId.isValid(turmaId)) {
+      return res.status(400).json({ message: "ID da turma inválido." });
+    }
+
+    const query = turmaId ? { idTurma: turmaId } : {};
+
+    const alunos = await Aluno.find(query).populate('idTurma');
+    res.status(200).json(alunos);
+  } catch (err) {
+    res.status(500).json({ message: 'Erro ao buscar alunos', error: err.message });
+  }
+});
+
+
+module.exports ={createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma,getAlunosByTurma}

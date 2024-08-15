@@ -27,6 +27,27 @@ const createClasse = asyncHandler(async (req, res) => {
   }
 });
 
+const getDisciplinasPorClasse = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    console.log("chegouuuu........1",id);
+  
+    try {
+      const classe = await Classe.findById(id).populate('disciplinas', 'nome');
+
+      console.log("classes........",classe)
+  
+      if (!classe) {
+        console.log("'classe nao encontrada");
+        return res.status(404).json({ message: 'Classe não encontrada' });
+      }
+  
+      res.status(200).json(classe.disciplinas);
+    } catch (err) {
+      res.status(500).json({ message: 'Erro ao obter disciplinas por classe', error: err.message });
+    }
+  });
+
 
 const updateClasse = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -84,7 +105,7 @@ const getClasseById = asyncHandler(async (req, res) => {
   }
 });
 
-// Deletar uma classe
+
 const deleteClasse = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
@@ -106,5 +127,6 @@ module.exports = {
   updateClasse,
   getClasses,
   getClasseById,
-  deleteClasse
+  deleteClasse,
+  getDisciplinasPorClasse 
 };
