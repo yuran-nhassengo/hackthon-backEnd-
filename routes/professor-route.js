@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createProfessor, getProfessores,
-     getProfessorById, updateProfessor,
+     getProfessorById, updateProfessor,getQuantidadeClassesPorProfessor,
       deleteProfessor } = require('../controller/professor-controller');
 
 
@@ -18,5 +18,7 @@ router.put('/professores/:id', updateProfessor);
 
 
 router.delete('/professores/:id', deleteProfessor);
+
+router.get('/quantidade-classes', getQuantidadeClassesPorProfessor);
 
 module.exports = router;

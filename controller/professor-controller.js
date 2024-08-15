@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Professor = require('../model/professor-model');
+const Turma = require('../model/turma-model');
+
 const bcrypt = require('bcryptjs');
 
 
@@ -88,10 +90,24 @@ const deleteProfessor = asyncHandler(async (req, res) => {
   }
 });
 
+const getQuantidadeClassesPorProfessor = async (req, res) => {
+  const professorId = req.professorId;
+
+  try {
+    const quantidadeTurmas = await Turma.countDocuments({ idProfessor: professorId });
+
+    res.json({ quantidadeTurmas });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 module.exports = {
   createProfessor,
   getProfessores,
   getProfessorById,
   updateProfessor,
   deleteProfessor,
+  getQuantidadeClassesPorProfessor 
 };
