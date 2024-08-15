@@ -96,5 +96,19 @@ const getAlunosByTurma = asyncHandler(async (req, res) => {
   }
 });
 
+const getQuantidadeTurmas = async (req, res) => {
+  const professorId = req.professorId; 
+  
+  try {
+    
+    const quantidadeTurmas = await Turma.countDocuments({ idProfessor: professorId });
+    
+   
+    res.json({ quantidadeTurmas });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-module.exports ={createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma,getAlunosByTurma}
+
+module.exports ={createTurma,getTurmas,getTurmaById,updateTurma,deleteTurma,getAlunosByTurma,getQuantidadeTurmas}
