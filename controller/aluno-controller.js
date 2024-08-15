@@ -104,14 +104,16 @@ const deleteAluno = asyncHandler(async (req, res) => {
   
     try {
 
-      const alunos = await Aluno.find({ idTurma }).populate('idTurma');
+      const alunos = await Aluno.find({ idTurma });
       console.log("quase....2",alunos)
       
       if (alunos.length === 0) {
         return res.status(404).json({ message: 'Nenhum aluno encontrado para esta turma.' });
       }
   
+
       res.status(200).json(alunos);
+      console.log("quase....33",alunos);
     } catch (err) {
       res.status(500).json({ message: 'Erro ao buscar alunos', error: err.message });
     }
