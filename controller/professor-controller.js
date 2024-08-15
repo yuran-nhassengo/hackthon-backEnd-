@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler');
 const Professor = require('../model/professor-model');
 const Turma = require('../model/turma-model');
 
+const Classe = require('../model/classe-model');
+
 const bcrypt = require('bcryptjs');
 
 
@@ -102,6 +104,28 @@ const getQuantidadeClassesPorProfessor = async (req, res) => {
   }
 };
 
+const getQuantidadeDisciplinasPorProfessor = async (req, res) => {
+  const professorId = req.professorId; 
+
+  try {
+
+    const turmas = await Turma.find({ idProfessor: professorId }).populate('idClasse');
+
+    
+    const disciplinas = new Set();
+    for (const turma of turmas) {
+      const classe = turma.idClasse;
+      if (classe && classe.disciplinas) {
+        classe.disciplinas.forEach(disciplinaId => disciplinas.add(disciplinaId.toString()));
+      }
+    }
+
+    res.json({ quantidadeDisciplinas: disciplinas.size });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 module.exports = {
   createProfessor,
@@ -109,5 +133,6 @@ module.exports = {
   getProfessorById,
   updateProfessor,
   deleteProfessor,
-  getQuantidadeClassesPorProfessor 
+  getQuantidadeClassesPorProfessor,
+  getQuantidadeDisciplinasPorProfessor 
 };
